@@ -1,0 +1,320 @@
+interface Eth1/1
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/2
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/3
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/4
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/5
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/6
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/7
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/8
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/9
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/10
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/11
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/12
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/13
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/14
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/15
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/16
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/17
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/18
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/19
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/20
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/21
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/22
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/23
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/24
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/25
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/26
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/27
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/28
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/29
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/30
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/31
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/32
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/33
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/34
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/35
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/36
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/37
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/38
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/39
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/40
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/41
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/42
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/43
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/44
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/45
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/46
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/47
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/48
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/49
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/50
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/51
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/52
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/53
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/54
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/55
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/56
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/57
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/58
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/59
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/60
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/61
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/62
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/63
+ beacon 
+ shutdown 
+exit 
+!
+interface Eth1/64
+ beacon 
+ shutdown 
+exit 
+!
