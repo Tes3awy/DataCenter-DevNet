@@ -6,7 +6,7 @@
 [![Commit Activity](https://img.shields.io/github/commit-activity/m/Tes3awy/DataCenter-DevNet)](https://github.com/Tes3awy/DataCenter-DevNet/commits/main)
 ![Last Commit](https://img.shields.io/github/last-commit/Tes3awy/DataCenter-DevNet)
 [![Code Size](https://img.shields.io/github/languages/code-size/Tes3awy/DataCenter-DevNet?color=green)](https://github.com/Tes3awy/DataCenter-DevNet)
-[![License](https://img.shields.io/github/license/Tes3awy/DataCenter-DevNet)](https://github.com/Tes3awy/DataCenter-DevNet/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/Tes3awy/DataCenter-DevNet?color=purple&label=LICENSE&logo=MIT)](https://github.com/Tes3awy/DataCenter-DevNet/blob/main/LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 [![Pre-Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
