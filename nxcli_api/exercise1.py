@@ -1,10 +1,9 @@
 import json
 
-from urllib3.exceptions import InsecureRequestWarning
-
 import requests
 from requests.auth import HTTPBasicAuth as BasicAuth
 from requests.packages import urllib3
+from urllib3.exceptions import InsecureRequestWarning
 
 urllib3.disable_warnings(InsecureRequestWarning)
 
