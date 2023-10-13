@@ -33,8 +33,8 @@ response = requests.post(
 facts = response.json()
 
 # Export facts to a JSON file
-with open(file="facts.json", mode="w") as outfile:
-    json.dump(obj=facts, fp=outfile, indent=4)
+with open(file="facts.json", mode="wt") as f:
+    json.dump(obj=facts, fp=f, indent=4)
 
 # --------------------------------------------------
 
@@ -63,7 +63,7 @@ response = requests.post(
 intfs_brief = response.json()
 
 # Export interface brief output to a JSON file
-with open(file="intfs-brief-output.json", mode="w") as outfile:
-    json.dump(obj=intfs_brief, fp=outfile, indent=4)
+with open(file="intfs-brief-output.json", mode="wt") as f:
+    json.dump(obj=intfs_brief, fp=f, indent=4)
 
 print("Done")

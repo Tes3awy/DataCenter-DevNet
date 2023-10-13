@@ -38,28 +38,30 @@ devices = [
 ]
 
 # Create an Excel file
-with xlsxwriter.Workbook(filename="Ex4-Nexus-Interfaces-Brief.xlsx") as workbook:
+with xlsxwriter.Workbook(filename="Ex4-Nexus-Interfaces-Brief.xlsx") as wb:
     # Loop over each device
     for device in devices:
         # Connect to each device
-        with ConnectHandler(**device) as net_connect:
+        with ConnectHandler(**device) as conn:
             # Parse hostname of each device
-            hostname = net_connect.send_command(
+            hostname = conn.send_command(
                 command_string="show hostname", use_textfsm=True
             )[0]["hostname"]
             # Parse show interface brief of each device
-            intfs = net_connect.send_command(
+            intfs = conn.send_command(
                 command_string="show interface brief", use_textfsm=True
             )
+
         # Export interfaces to a JSON file for readability (Comment out if you don't need it)
-        with open(file=f"{hostname}-intfs-brief.json", mode="w") as outfile:
-            json.dump(obj=intfs, fp=outfile, indent=4, sort_keys=True)
+        with open(file=f"{hostname}-intfs-brief.json", mode="wt") as f:
+            json.dump(obj=intfs, fp=f, indent=4, sort_keys=True)
+
         # Create worksheets with the hostname of each device
-        worksheet = workbook.add_worksheet(f"{hostname} Interface Brief")
+        ws = wb.add_worksheet(f"{hostname} Interface Brief")
         # Auto Filter for header line
-        worksheet.autofilter("A1:L1")
+        ws.autofilter("A1:L1")
         # Freeze top row and very left column only
-        worksheet.freeze_panes(1, 1)
+        ws.freeze_panes(1, 1)
 
         # Header line
         header_line = {
@@ -78,7 +80,7 @@ with xlsxwriter.Workbook(filename="Ex4-Nexus-Interfaces-Brief.xlsx") as workbook
         }
 
         # Format header line text
-        header_line_frmt = workbook.add_format(
+        header_line_frmt = wb.add_format(
             {
                 "bold": True,
                 "align": "center",
@@ -89,27 +91,26 @@ with xlsxwriter.Workbook(filename="Ex4-Nexus-Interfaces-Brief.xlsx") as workbook
         )
 
         # Write header line
-        for key, value in header_line.items():
-            worksheet.write(key, value, header_line_frmt)
+        for cell, val in header_line.items():
+            ws.write(cell, val, header_line_frmt)
 
         # Initial Values for row and col
-        row = 1
-        col = 0
+        row, col = 1, 0
 
         # Place data according to header line
         for intf in intfs:
-            worksheet.write(row, col + 0, intf["interface"])  # Interface Name
-            worksheet.write(row, col + 1, intf["ip"])  # IP
-            worksheet.write(row, col + 2, intf["type"])  # Type
-            worksheet.write(row, col + 3, intf["mode"])  # Mode
-            worksheet.write(row, col + 4, intf["vlan"])  # VLAN
-            worksheet.write(row, col + 5, intf["portch"])  # Port-Channel
-            worksheet.write(row, col + 6, intf["speed"])  # Speed
-            worksheet.write(row, col + 7, intf["status"])  # Status
-            worksheet.write(row, col + 8, intf["mtu"])  # MTU
-            worksheet.write(row, col + 9, intf["vrf"])  # VRF
-            worksheet.write(row, col + 10, intf["reason"])  # Reason
-            worksheet.write(row, col + 11, intf["description"])  # Description
+            ws.write(row, col + 0, intf["interface"])  # Interface Name
+            ws.write(row, col + 1, intf["ip"])  # IP
+            ws.write(row, col + 2, intf["type"])  # Type
+            ws.write(row, col + 3, intf["mode"])  # Mode
+            ws.write(row, col + 4, intf["vlan"])  # VLAN
+            ws.write(row, col + 5, intf["portch"])  # Port-Channel
+            ws.write(row, col + 6, intf["speed"])  # Speed
+            ws.write(row, col + 7, intf["status"])  # Status
+            ws.write(row, col + 8, intf["mtu"])  # MTU
+            ws.write(row, col + 9, intf["vrf"])  # VRF
+            ws.write(row, col + 10, intf["reason"])  # Reason
+            ws.write(row, col + 11, intf["description"])  # Description
 
             # Jump to next row
             row += 1

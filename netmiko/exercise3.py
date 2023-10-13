@@ -35,14 +35,14 @@ devices = [
     },
 ]
 
-# Create an Excel file with devices details
-with xlsxwriter.Workbook("Ex3-Nexus-Devices.xlsx") as workbook:
-    # The Excel sheet within the file
-    worksheet = workbook.add_worksheet("Nexus Devices")
+# Create an Excel file workbook for devices facts
+with xlsxwriter.Workbook("Ex3-Nexus-Devices.xlsx") as wb:
+    # The Excel worksheet within the file
+    ws = wb.add_worksheet("Nexus Devices Facts")
 
     # Customization for the sheet
-    worksheet.autofilter("A1:H1")
-    worksheet.freeze_panes(1, 1)
+    ws.autofilter("A1:H1")
+    ws.freeze_panes(1, 1)
 
     # Header line
     header_line = {
@@ -57,32 +57,31 @@ with xlsxwriter.Workbook("Ex3-Nexus-Devices.xlsx") as workbook:
     }
 
     # Write header line
-    for cell, value in header_line.items():
-        worksheet.write(cell, value)
+    for cell, val in header_line.items():
+        ws.write(cell, val)
 
     # Initial values for row and col
-    row = 1
-    col = 0
+    row, col = 1, 0
 
     # Iterate over devices
     for device in devices:
         # Create a connection instance to each device
         with ConnectHandler(**device) as net_connect:
-            output = net_connect.send_command(
+            facts = net_connect.send_command(
                 command_string="show version", use_textfsm=True
             )[0]
 
         # Write each value in the corresponding cell
         # according to the header line
-        worksheet.write(row, col + 0, output["hostname"])  # 1
+        ws.write(row, col + 0, facts["hostname"])  # 1
         # Notice device["ip"] not output["ip"]!!
-        worksheet.write(row, col + 1, device["ip"])  # 2
-        worksheet.write(row, col + 2, output["serial"])  # 3
-        worksheet.write(row, col + 3, output["platform"])  # 4
-        worksheet.write(row, col + 4, output["os"])  # 5
-        worksheet.write(row, col + 5, output["boot_image"])  # 6
-        worksheet.write(row, col + 6, output["last_reboot_reason"])  # 7
-        worksheet.write(row, col + 7, output["uptime"])  # 8
+        ws.write(row, col + 1, device["ip"])  # 2
+        ws.write(row, col + 2, facts["serial"])  # 3
+        ws.write(row, col + 3, facts["platform"])  # 4
+        ws.write(row, col + 4, facts["os"])  # 5
+        ws.write(row, col + 5, facts["boot_image"])  # 6
+        ws.write(row, col + 6, facts["last_reboot_reason"])  # 7
+        ws.write(row, col + 7, facts["uptime"])  # 8
 
         # Jump to next row
         row += 1

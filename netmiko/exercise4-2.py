@@ -39,29 +39,29 @@ devices = [
 ]
 
 # Create an Excel file
-with xlsxwriter.Workbook(filename="Ex4-2-Nexus-Inventory.xlsx") as workbook:
+with xlsxwriter.Workbook(filename="Ex4-2-Nexus-Inventory.xlsx") as wb:
     # Loop over each device
     for device in devices:
         # Connect to each device
-        with ConnectHandler(**device) as net_connect:
+        with ConnectHandler(**device) as conn:
             # Parse hostname of each device
-            hostname = net_connect.send_command(
+            hostname = conn.send_command(
                 command_string="show hostname", use_textfsm=True
             )[0]["hostname"]
             # Parse show inventory of each device
-            inventory = net_connect.send_command(
+            inventory = conn.send_command(
                 command_string="show inventory", use_textfsm=True
             )
 
         # Export interfaces to a JSON file for readability (Comment out if you don't need it)
-        with open(file=f"{hostname}-inventory.json", mode="w") as outfile:
-            json.dump(obj=inventory, fp=outfile, indent=4, sort_keys=True)
+        with open(file=f"{hostname}-inventory.json", mode="wt") as f:
+            json.dump(obj=inventory, fp=f, indent=4, sort_keys=True)
         # Create worksheets with the hostname of each device
-        worksheet = workbook.add_worksheet(f"{hostname} Inventory")
+        ws = wb.add_worksheet(f"{hostname} Inventory")
         # Auto Filter for header line
-        worksheet.autofilter("A1:E1")
+        ws.autofilter("A1:E1")
         # Freeze top row and very left column only
-        worksheet.freeze_panes(1, 1)
+        ws.freeze_panes(1, 1)
 
         # Header line
         header_line = {
@@ -73,7 +73,7 @@ with xlsxwriter.Workbook(filename="Ex4-2-Nexus-Inventory.xlsx") as workbook:
         }
 
         # Format header line text
-        header_line_frmt = workbook.add_format(
+        header_line_frmt = wb.add_format(
             {
                 "bold": True,
                 "align": "center",
@@ -84,20 +84,19 @@ with xlsxwriter.Workbook(filename="Ex4-2-Nexus-Inventory.xlsx") as workbook:
         )
 
         # Write header line
-        for key, value in header_line.items():
-            worksheet.write(key, value, header_line_frmt)
+        for cell, val in header_line.items():
+            ws.write(cell, val, header_line_frmt)
 
         # Initial Values for row and col
-        row = 1
-        col = 0
+        row, col = 1, 0
 
         # Place data according to header line
-        for item in inventory:
-            worksheet.write(row, col + 0, item["name"])  # Module Name
-            worksheet.write(row, col + 1, item["sn"])  # Serial Number
-            worksheet.write(row, col + 2, item["pid"])  # PID
-            worksheet.write(row, col + 3, item["vid"])  # VID
-            worksheet.write(row, col + 4, item["descr"])  # Description
+        for module in inventory:
+            ws.write(row, col + 0, module["name"])  # Module Name
+            ws.write(row, col + 1, module["sn"])  # Serial Number
+            ws.write(row, col + 2, module["pid"])  # PID
+            ws.write(row, col + 3, module["vid"])  # VID
+            ws.write(row, col + 4, module["descr"])  # Description
 
             # Jump to next row
             row += 1

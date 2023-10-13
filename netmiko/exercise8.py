@@ -11,33 +11,30 @@ df = pd.DataFrame(data)
 
 ips = df.iloc[:, 0].tolist()  # If NOT usecols="B", then replace 0 with 1
 
-# Append IP to the dictionary template from the Excel file
-devices = []
-for ip in ips:
-    devices.append(
-        {
-            "device_type": "cisco_nxos",
-            "ip": ip,
-            "username": "admin",
-            "password": "Admin_1234!",
-            "port": 8181,
-            "fast_cli": False,
-            "session_log": f"{ip}-nxos-exercise8.log",
-        }
-    )
+devices = [
+    {
+        "device_type": "cisco_nxos",
+        "ip": ip,
+        "username": "admin",
+        "password": "Admin_1234!",
+        "port": 8181,
+        "fast_cli": False,
+        "session_log": f"{ip}-nxos-exercise8.log",
+    }
+    for ip in ips
+]
 
 # Iterate over devices
 for device in devices:
     # Create a connection instance
-    with ConnectHandler(**device) as net_connect:
+    with ConnectHandler(**device) as conn:
         # Parse the hostname of the device
-        hostname = net_connect.send_command(
-            command_string="show hostname", use_textfsm=True
-        )[0]["hostname"]
+        hostname = conn.send_command(command_string="show hostname", use_textfsm=True)[
+            0
+        ]["hostname"]
         # Parse the interface brief of the  device
-        down_intfs = net_connect.send_command(
-            command_string="show interface brief",
-            use_textfsm=True,
+        down_intfs = conn.send_command(
+            command_string="show interface brief", use_textfsm=True
         )
 
         cfg = ""
@@ -46,18 +43,23 @@ for device in devices:
                 "Eth" in down_intf["interface"]
                 and "Link not connected" in down_intf["reason"]
             ):
-                template = f'interface {down_intf["interface"]}\n shutdown\nexit\n!\n'
-                cfg += template
+                cfg_template = f"""\
+                interface {down_intf["interface"]}
+                 shutdown
+                 exit
+                 !
+                """
+                cfg += cfg_template
 
         # Export shutdown template to a text file
         cfg_fname = f"Ex6-1-{hostname}-shutdown-intfs.txt"
-        with open(file=f"{cfg_fname}", mode="w") as outfile:
-            outfile.write(cfg.lstrip())
+        with open(file=f"{cfg_fname}", mode="wt") as f:
+            f.writelines([cfg, "end", "\n"])
 
         # Send the new config to each device
-        send_cfg = net_connect.send_config_from_file(config_file=f"{cfg_fname}")
+        send_cfg = conn.send_config_from_file(config_file=f"{cfg_fname}")
 
         # Save the new config
-        send_cfg += net_connect.save_config()
+        send_cfg += conn.save_config()
 
 print("Done")

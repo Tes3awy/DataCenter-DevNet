@@ -37,13 +37,13 @@ for device in devices:
     with ConnectHandler(**device) as net_connect:
         # Parse hostname of the device
         hostname = net_connect.send_command(
-            command_string="show version", use_textfsm=True
+            command_string="show hostname", use_textfsm=True
         )[0]["hostname"]
         # Parse running configuration of the device
         run_cfg = net_connect.send_command(command_string="show running-config")
 
     # Save running config to a text file with the hostname of the device
-    with open(file=f"{hostname}_run-cfg-ex2-1.txt", mode="w") as outfile:
-        outfile.write(run_cfg.lstrip())
+    with open(file=f"{hostname}_run-cfg-ex2-1.txt", mode="wt") as f:
+        f.writelines([run_cfg.strip(), "\n"])
 
 print("Done")

@@ -38,7 +38,7 @@ devices = [
 ]
 
 # Create an Excel file
-with xlsxwriter.Workbook(filename="Ex4-1-Nexus-Interfaces.xlsx") as workbook:
+with xlsxwriter.Workbook(filename="Ex4-1-Nexus-Interfaces.xlsx") as wb:
     # Loop over each device
     for device in devices:
         # Connect to each device
@@ -52,14 +52,14 @@ with xlsxwriter.Workbook(filename="Ex4-1-Nexus-Interfaces.xlsx") as workbook:
                 command_string="show interface", use_textfsm=True
             )
         # Export interfaces to a JSON file for readability (Comment out if you don't need it)
-        with open(file=f"{hostname}-intfs.json", mode="w") as outfile:
-            json.dump(obj=intfs, fp=outfile, indent=4, sort_keys=True)
+        with open(file=f"{hostname}-intfs.json", mode="wt") as f:
+            json.dump(obj=intfs, fp=f, indent=4, sort_keys=True)
         # Create worksheets with the hostname of each device
-        worksheet = workbook.add_worksheet(f"{hostname} Interfaces")
+        ws = wb.add_worksheet(f"{hostname} Interfaces")
         # Auto Filter for header line
-        worksheet.autofilter("A1:T1")
+        ws.autofilter("A1:T1")
         # Freeze top row and very left column only
-        worksheet.freeze_panes(1, 1)
+        ws.freeze_panes(1, 1)
 
         # Header line
         header_line = {
@@ -86,7 +86,7 @@ with xlsxwriter.Workbook(filename="Ex4-1-Nexus-Interfaces.xlsx") as workbook:
         }
 
         # Format header line text
-        header_line_frmt = workbook.add_format(
+        header_line_frmt = wb.add_format(
             {
                 "bold": True,
                 "align": "center",
@@ -97,35 +97,34 @@ with xlsxwriter.Workbook(filename="Ex4-1-Nexus-Interfaces.xlsx") as workbook:
         )
 
         # Write header line
-        for cell, value in header_line.items():
-            worksheet.write(cell, value, header_line_frmt)
+        for cell, val in header_line.items():
+            ws.write(cell, val, header_line_frmt)
 
         # Initial Values for row and col
-        row = 1
-        col = 0
+        row, col = 1, 0
 
         # Place data according to header line
         for intf in intfs:
-            worksheet.write(row, col + 0, intf["interface"])  # 1
-            worksheet.write(row, col + 1, intf["ip_address"])  # 2
-            worksheet.write(row, col + 2, intf["hardware_type"])  # 3
-            worksheet.write(row, col + 3, intf["address"])  # 4
-            worksheet.write(row, col + 4, intf["encapsulation"])  # 5
-            worksheet.write(row, col + 5, intf["bia"])  # 6
-            worksheet.write(row, col + 6, intf["last_link_flapped"])  # 7
-            worksheet.write(row, col + 7, intf["link_status"])  # 8
-            worksheet.write(row, col + 8, intf["admin_state"])  # 9
-            worksheet.write(row, col + 9, intf["input_packets"])  # 10
-            worksheet.write(row, col + 10, intf["input_errors"])  # 11
-            worksheet.write(row, col + 11, intf["output_packets"])  # 12
-            worksheet.write(row, col + 12, intf["output_errors"])  # 13
-            worksheet.write(row, col + 13, intf["speed"])  # 14
-            worksheet.write(row, col + 14, intf["mode"])  # 15
-            worksheet.write(row, col + 15, intf["duplex"])  # 16
-            worksheet.write(row, col + 16, intf["delay"])  # 17
-            worksheet.write(row, col + 17, intf["bandwidth"])  # 18
-            worksheet.write(row, col + 18, intf["mtu"])  # 19
-            worksheet.write(row, col + 19, intf["description"])  # 20
+            ws.write(row, col + 0, intf["interface"])  # 1
+            ws.write(row, col + 1, intf["ip_address"])  # 2
+            ws.write(row, col + 2, intf["hardware_type"])  # 3
+            ws.write(row, col + 3, intf["address"])  # 4
+            ws.write(row, col + 4, intf["encapsulation"])  # 5
+            ws.write(row, col + 5, intf["bia"])  # 6
+            ws.write(row, col + 6, intf["last_link_flapped"])  # 7
+            ws.write(row, col + 7, intf["link_status"])  # 8
+            ws.write(row, col + 8, intf["admin_state"])  # 9
+            ws.write(row, col + 9, intf["input_packets"])  # 10
+            ws.write(row, col + 10, intf["input_errors"])  # 11
+            ws.write(row, col + 11, intf["output_packets"])  # 12
+            ws.write(row, col + 12, intf["output_errors"])  # 13
+            ws.write(row, col + 13, intf["speed"])  # 14
+            ws.write(row, col + 14, intf["mode"])  # 15
+            ws.write(row, col + 15, intf["duplex"])  # 16
+            ws.write(row, col + 16, intf["delay"])  # 17
+            ws.write(row, col + 17, intf["bandwidth"])  # 18
+            ws.write(row, col + 18, intf["mtu"])  # 19
+            ws.write(row, col + 19, intf["description"])  # 20
 
             # Jump to next row
             row += 1

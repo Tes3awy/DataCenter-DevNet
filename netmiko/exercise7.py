@@ -17,21 +17,21 @@ devices = [
 # Loop through devices
 for device in devices:
     # Create a connection instance
-    with ConnectHandler(**device) as net_connect:
+    with ConnectHandler(**device) as conn:
         # Parse hostname of the device
-        hostname = net_connect.send_command(
-            command_string="show hostname", use_textfsm=True
-        )[0]["hostname"]
+        hostname = conn.send_command(command_string="show hostname", use_textfsm=True)[
+            0
+        ]["hostname"]
         # Send config from text file (or Use ex5-config.txt)
-        output = net_connect.send_config_from_file(config_file="ex7-config.txt")
+        output = conn.send_config_from_file(config_file="ex7-config.txt")
         # And save configuration
-        output += net_connect.save_config()
+        output += conn.save_config()
 
         # Parse the new running configuration
-        run_cfg = net_connect.send_command(command_string="show running-config")
+        run_cfg = conn.send_command(command_string="show running-config")
 
     # Export the new running-config of each device to a text file
-    with open(file=f"{hostname}-run_cfg-ex7.txt", mode="w") as outfile:
-        outfile.write(run_cfg.lstrip())
+    with open(file=f"{hostname}-run_cfg-ex7.txt", mode="wt") as f:
+        f.write(run_cfg.lstrip())
 
 print("Done")

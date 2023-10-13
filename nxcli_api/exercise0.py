@@ -38,7 +38,7 @@ response = requests.post(
 vlan_brief = response.json()
 
 # Export response to a JSON file
-with open(file="vlan-brief-output.json", mode="w") as outfile:
-    json.dump(obj=vlan_brief, fp=outfile, indent=4)
+with open(file="vlan-brief-output.json", mode="wt") as f:
+    json.dump(obj=vlan_brief, fp=f, indent=4)
 
 print("Done")

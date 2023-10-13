@@ -16,9 +16,9 @@ device = {
 }
 
 # Create a connection instance using Context Manager
-with ConnectHandler(**device) as net_connect:
+with ConnectHandler(**device) as conn:
     # Use TEXTFSM to parse the show version command output
-    output = net_connect.send_command(command_string="show version", use_textfsm=True)
+    output = conn.send_command(command_string="show version", use_textfsm=True)
 
 pprint(output)
 print("Done")
