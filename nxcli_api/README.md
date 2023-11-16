@@ -20,4 +20,4 @@ In terminal.
 
 # Exercise 2
 
-> Show how to send `show interface transceiver` command and export its output to CSV file.
+> Shows how to send `show interface transceiver` command and export its output to a CSV file.
