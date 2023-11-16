@@ -17,3 +17,7 @@ In terminal.
 # Exercise 1
 
 > Shows how to send subsequent requests using cookies.
+
+# Exercise 2
+
+> Show how to send `show interface transceiver` command and export its output to CSV file.
