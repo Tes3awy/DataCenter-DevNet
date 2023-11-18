@@ -5,7 +5,6 @@ from getpass import getpass
 
 import requests
 import urllib3
-from requests.auth import HTTPBasicAuth as BasicAuth
 from urllib3.exceptions import InsecureRequestWarning
 
 urllib3.disable_warnings(InsecureRequestWarning)
@@ -26,12 +25,11 @@ data = {
     }
 }
 
+s = requests.Session()  # use session
 try:
     print(f"Trying {host}...", end="\r")
     # POST: Request
-    r = requests.post(
-        url=f"https://{host}:443/ins", auth=BasicAuth(usr, pwd), json=data, verify=False
-    )
+    r = s.post(url=f"https://{host}:443/ins", auth=(usr, pwd), json=data, verify=False)
     r.raise_for_status()
 except requests.HTTPError as e:
     raise SystemExit(e) from e
@@ -49,7 +47,7 @@ else:
 
     # Create CSV file
     with open(
-        file=f"transceivers_{date.today()}.csv", mode="wt", newline=""
+        file=f"{host}-transceivers_{date.today()}.csv", mode="wt", newline=""
     ) as csvfile:
         csvwriter = csv.DictWriter(csvfile, fieldnames=["interface", "sfp"])
         csvwriter.writerows(interfaces)
