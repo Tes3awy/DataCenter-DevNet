@@ -5,7 +5,6 @@ from getpass import getpass
 
 import requests
 import urllib3
-from numpy import sort
 from urllib3.exceptions import InsecureRequestWarning
 
 urllib3.disable_warnings(InsecureRequestWarning)
