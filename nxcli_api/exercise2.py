@@ -5,6 +5,7 @@ from getpass import getpass
 
 import requests
 import urllib3
+from numpy import sort
 from urllib3.exceptions import InsecureRequestWarning
 
 urllib3.disable_warnings(InsecureRequestWarning)
@@ -45,10 +46,14 @@ else:
         .get("ROW_interface")
     )
 
+    # Extract unique keys for DictWriter fieldnames
+    fieldnames = sorted(set().union(*(interface.keys() for interface in interfaces)))
+
     # Create CSV file
     with open(
         file=f"{host}-transceivers_{date.today()}.csv", mode="wt", newline=""
     ) as csvfile:
-        csvwriter = csv.DictWriter(csvfile, fieldnames=["interface", "sfp"])
+        csvwriter = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        csvwriter.writeheader()
         csvwriter.writerows(interfaces)
     print(f"Created {csvfile.name} file successfully")
