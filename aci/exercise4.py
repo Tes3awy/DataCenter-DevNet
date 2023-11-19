@@ -1,36 +1,23 @@
+from getpass import getpass
+
 import requests
-from requests.exceptions import ConnectionError, ConnectTimeout, HTTPError
-from requests.packages import urllib3
+import urllib3
+from requests.exceptions import ConnectionError, HTTPError
 from urllib3.exceptions import InsecureRequestWarning
 
 # Disable SSL Warning
 urllib3.disable_warnings(InsecureRequestWarning)
 
 # Inputs
-base_url = "https://sandboxapicdc.cisco.com:443"
-username = "admin"
-password = "ciscopsdt"
-verify = False
+apic = input("APIC [sandboxapicdc.cisco.com]: ") or "sandboxapicdc.cisco.com"
+base = f"https://{apic}:443"
+username = input("Username [admin]: ") or "admin"
+password = getpass("Password: ") or "!v3G@!4@Y"
 
-# Optional (As long as using .json in the URL)
-headers = {"Content-Type": "application/json"}
-
-credentials = {
-    "aaaUser": {
-        "attributes": {
-            "name": username,
-            "pwd": password,
-        }
-    }
-}
+payload = {"aaaUser": {"attributes": {"name": username, "pwd": password}}}
 
 # POST: Request
-response = requests.post(
-    url=f"{base_url}/api/aaaLogin.json",
-    headers=headers,
-    json=credentials,
-    verify=verify,
-)
+response = requests.post(url=f"{base}/api/aaaLogin.json", json=payload, verify=False)
 
 token = response.json()["imdata"][0]["aaaLogin"]["attributes"]["token"]
 
@@ -39,9 +26,7 @@ token = response.json()["imdata"][0]["aaaLogin"]["attributes"]["token"]
 # Create a new VRF
 
 # Use the token for subsequent requests
-cookies = {}
-cookies["APIC-Cookie"] = token
-
+cookies = {"APIC-Cookie": token}
 vrf = {
     "fvCtx": {
         "attributes": {"name": "example-vrf"},
@@ -51,23 +36,17 @@ vrf = {
 # POST: Request
 try:
     response = requests.post(
-        url=f"{base_url}/api/mo/uni/tn-ExampleTenant1.json",
-        headers=headers,
+        url=f"{base}/api/mo/uni/tn-ExampleTenant1.json",
         cookies=cookies,
         json=vrf,
-        verify=verify,
+        verify=False,
     )
-
     response.raise_for_status()
     print(response.json())
-except HTTPError as e:
-    print(e)
-except ConnectionError as e:
-    print(e)
-except ConnectTimeout as e:
+except (HTTPError, ConnectionError) as e:
     print(e)
 else:
-    if response.json()["imdata"] == []:
+    if response.status_code == 200 and response.json()["imdata"] == []:
         print("VRF added successfully")
 
 print("Done")
